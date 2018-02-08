@@ -1,0 +1,36 @@
+wocky_db_watcher_build:
+  build:
+    context: .
+    dockerfile: Dockerfile.build
+    image: hippware/wocky_db_watcher:build
+  cached: true
+  volumes:
+    - ./tmp/artifacts:/artifacts
+#wocky_db_watcher_test:
+#  build:
+#    context: .
+#    dockerfile: Dockerfile.build
+#    image: hippware/wocky_db_watcher:build
+#  cached: true
+#  environment:
+#    WOCKY_DB_HOST: "postgres"
+#  depends_on:
+#    - postgres
+postgres:
+  image: mdillon/postgis:9.6-alpine
+  environment:
+    POSTGRES_PASSWORD: "password"
+  ports:
+    - "5432"
+wocky_db_watcher_rel:
+  build:
+    context: .
+    dockerfile: Dockerfile.release
+    image: 773488857071.dkr.ecr.us-west-2.amazonaws.com/hippware/wocky_db_watcher:latest
+    args:
+      RELEASE_NAME: wocky_db_watcher
+  cached: true
+aws_dockercfg:
+  image: codeship/aws-ecr-dockercfg-generator
+  add_docker: true
+  encrypted_env_file: aws.env.encrypted
