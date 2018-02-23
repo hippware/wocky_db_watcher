@@ -7,16 +7,11 @@ defmodule WockyDBWatcher.Backend.SQS do
   def init, do: :ok
 
   def send([message]) do
-    id =
-      [:monotonic]
-      |> :erlang.unique_integer()
-      |> Integer.to_string()
-
     queue()
     |> SQS.send_message(
       message,
       message_group_id: @group_id,
-      message_deduplication_id: id
+      message_deduplication_id: id()
     )
     |> ExAws.request(aws_config())
     |> IO.inspect()
@@ -24,7 +19,7 @@ defmodule WockyDBWatcher.Backend.SQS do
 
   def send(messages) do
     queue()
-    |> SQS.send_message_batch(messages)
+    |> SQS.send_message_batch(batchify(messages))
     |> ExAws.request(aws_config())
     |> IO.inspect()
   end
@@ -42,12 +37,10 @@ defmodule WockyDBWatcher.Backend.SQS do
   end
 
   def delete(messages) do
-    {del_list, _} = Enum.map_reduce(messages, 0,
-                                    fn m, id ->
-                                      {%{id: Integer.to_string(id),
-                                        receipt_handle: m.receipt_handle},
-                                        id + 1}
-                                    end)
+    {del_list, _} =
+      Enum.map_reduce(messages, 0, fn m, id ->
+        {%{id: Integer.to_string(id), receipt_handle: m.receipt_handle}, id + 1}
+      end)
 
     queue()
     |> SQS.delete_message_batch(del_list)
@@ -64,5 +57,21 @@ defmodule WockyDBWatcher.Backend.SQS do
     :wocky_db_watcher
     |> Confex.fetch_env!(__MODULE__)
     |> Keyword.get(term)
+  end
+
+  defp id do
+    [:monotonic]
+    |> :erlang.unique_integer()
+    |> Integer.to_string()
+  end
+
+  defp batchify(messages) do
+    Enum.map(messages, fn m ->
+      id = id()
+      [id: id,
+       message_body: m,
+       message_deduplication_id: id,
+       message_group_id: @group_id]
+    end)
   end
 end
