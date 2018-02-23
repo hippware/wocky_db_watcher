@@ -14,14 +14,12 @@ defmodule WockyDBWatcher.Backend.SQS do
       message_deduplication_id: id()
     )
     |> ExAws.request(aws_config())
-    |> IO.inspect()
   end
 
   def send(messages) do
     queue()
     |> SQS.send_message_batch(batchify(messages))
     |> ExAws.request(aws_config())
-    |> IO.inspect()
   end
 
   def recv do
@@ -32,7 +30,7 @@ defmodule WockyDBWatcher.Backend.SQS do
 
     case result do
       {:ok, %{body: %{messages: []}}} -> recv()
-      {:ok, %{body: %{messages: messages}}} -> messages
+      {:ok, %{body: %{messages: messages}}} -> {:ok, messages}
     end
   end
 
