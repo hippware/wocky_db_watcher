@@ -18,3 +18,11 @@ config :wocky_db_watcher, WockyDBWatcher.Backend.SQS,
   queue: {:system, :string, "WOCKY_DB_WATCHER_QUEUE"}
 
 import_config "#{Mix.env()}.exs"
+
+# Configure release generation
+config :distillery,
+  no_warn_missing: [
+    :distillery,
+    :dialyxir,
+    :parse_trans
+  ]

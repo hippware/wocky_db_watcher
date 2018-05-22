@@ -48,7 +48,7 @@ defmodule WockyDbWatcher.Mixfile do
       {:poison, "~> 3.1"},
 
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
-      {:distillery, "~> 1.1", runtime: false},
+      {:distillery, "~> 1.1", runtime: false}
     ]
   end
 end
