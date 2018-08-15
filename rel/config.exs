@@ -36,8 +36,5 @@ release :wocky_db_watcher do
     :wocky_db_watcher
   ]
   set vm_args: "rel/vm.args"
-  set overlays: [
-    {:copy, "rel/wockyctl", "bin/wockyctl"},
-  ]
 end
 
