@@ -43,7 +43,7 @@ defmodule WockyDbWatcher.Mixfile do
       {:ex_aws_sqs, "~> 2.0"},
       {:hackney, "~> 1.7"},
       {:sweet_xml, "~> 0.6"},
-      {:postgrex, "~> 0.13.0"},
+      {:postgrex, "~> 0.14.0"},
       {:confex, "~> 3.3"},
       {:poison, "~> 4.0"},
 
