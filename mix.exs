@@ -46,6 +46,7 @@ defmodule WockyDbWatcher.Mixfile do
       {:postgrex, "~> 0.14.0"},
       {:confex, "~> 3.3"},
       {:poison, "~> 3.0 or ~> 4.0"},
+      {:rexbug, ">= 1.0.0"},
 
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
       {:distillery, "~> 2.0", runtime: false}
