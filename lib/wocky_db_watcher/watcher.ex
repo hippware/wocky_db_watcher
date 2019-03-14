@@ -9,7 +9,6 @@ defmodule WockyDBWatcher.Watcher do
     @moduledoc "The state of the watcher"
 
     defstruct [
-      :dbpid,
       :ref,
       :channel,
       :backend,
@@ -35,14 +34,6 @@ defmodule WockyDBWatcher.Watcher do
   end
 
   def init(_) do
-    config =
-      :wocky_db_watcher
-      |> Confex.fetch_env!(:db)
-      |> Keyword.drop([:pool])
-
-    {:ok, dbpid} = Postgrex.start_link(config)
-    {:ok, npid} = Notifications.start_link(config)
-
     backend =
       :wocky_db_watcher
       |> Confex.get_env(:backend, WockyDBWatcher.Backend.SQS)
@@ -51,11 +42,10 @@ defmodule WockyDBWatcher.Watcher do
 
     channel = Confex.fetch_env!(:wocky_db_watcher, :channel)
 
-    ref = Notifications.listen!(npid, channel)
+    ref = Notifications.listen!(:watcher_notifications, channel)
 
     {:ok,
      %State{
-       dbpid: dbpid,
        ref: ref,
        channel: channel,
        backend: backend,
@@ -65,13 +55,13 @@ defmodule WockyDBWatcher.Watcher do
 
   def handle_info(
         {:notification, _, ref, channel, payload},
-        %State{dbpid: dbpid, ref: ref, channel: channel} = state
+        %State{ref: ref, channel: channel} = state
       ) do
 
     j = parse(payload)
 
     result = Postgrex.query!(
-      dbpid,
+      :watcher_postgrex,
       "DELETE FROM watcher_events WHERE id = $1 RETURNING payload",
       [j.id])
 
