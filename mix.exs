@@ -39,14 +39,14 @@ defmodule WockyDbWatcher.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:confex, "~> 3.3"},
       {:ex_aws, "~> 2.0"},
       {:ex_aws_sqs, "~> 2.0"},
       {:hackney, "~> 1.7"},
-      {:sweet_xml, "~> 0.6"},
-      {:postgrex, "~> 0.14.0"},
-      {:confex, "~> 3.3"},
       {:poison, "~> 3.0 or ~> 4.0"},
+      {:postgrex, "~> 0.14.0"},
       {:rexbug, ">= 1.0.0"},
+      {:sweet_xml, "~> 0.6"},
 
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
       {:distillery, "~> 2.0", runtime: false}
