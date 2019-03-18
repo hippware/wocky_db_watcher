@@ -2,7 +2,10 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :wocky_db_watcher, :db,
+config :dawdle_db,
+  channel: "wocky_db_watcher_notify"
+
+config :dawdle_db, :db,
   database: {:system, :string, "WOCKY_DB_NAME", "wocky"},
   username: {:system, :string, "WOCKY_DB_USER", "postgres"},
   password: {:system, :string, "WOCKY_DB_PASSWORD", "password"},
@@ -10,14 +13,10 @@ config :wocky_db_watcher, :db,
   port: {:system, :integer, "WOCKY_DB_PORT", 5432},
   pool_size: {:system, :integer, "WOCKY_DB_POOL_SIZE", 15}
 
-config :wocky_db_watcher,
-  channel: "wocky_db_watcher_notify"
-
-config :wocky_db_watcher, WockyDBWatcher.Backend.SQS,
+config :dawdle, Dawdle.Backend.SQS,
   region: {:system, :string, "WOCKY_DB_WATCHER_REGION"},
-  queue: {:system, :string, "WOCKY_DB_WATCHER_QUEUE"}
-
-import_config "#{Mix.env()}.exs"
+  message_queue: {:system, :string, "WOCKY_DB_WATCHER_QUEUE"},
+  delay_queue: ""
 
 # Configure release generation
 config :distillery,
@@ -26,3 +25,5 @@ config :distillery,
     :dialyxir,
     :parse_trans
   ]
+
+import_config "#{Mix.env()}.exs"

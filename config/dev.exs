@@ -1,6 +1,4 @@
 use Mix.Config
 
-config :wocky_db_watcher, :db,
+config :dawdle_db, :db,
   database: "wocky_dev"
-
-config :wocky_db_watcher, backend: WockyDBWatcher.Backend.Direct
