@@ -2,6 +2,13 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
+config :dawdle, backend: Dawdle.Backend.SQS
+
+config :dawdle, Dawdle.Backend.SQS,
+  region: {:system, :string, "WOCKY_DB_WATCHER_REGION"},
+  message_queue: {:system, :string, "WOCKY_DB_WATCHER_QUEUE"},
+  delay_queue: ""
+
 config :dawdle_db,
   channel: "wocky_db_watcher_notify"
 
@@ -12,18 +19,3 @@ config :dawdle_db, :db,
   hostname: {:system, :string, "WOCKY_DB_HOST", "localhost"},
   port: {:system, :integer, "WOCKY_DB_PORT", 5432},
   pool_size: {:system, :integer, "WOCKY_DB_POOL_SIZE", 15}
-
-config :dawdle, Dawdle.Backend.SQS,
-  region: {:system, :string, "WOCKY_DB_WATCHER_REGION"},
-  message_queue: {:system, :string, "WOCKY_DB_WATCHER_QUEUE"},
-  delay_queue: ""
-
-# Configure release generation
-config :distillery,
-  no_warn_missing: [
-    :distillery,
-    :dialyxir,
-    :parse_trans
-  ]
-
-import_config "#{Mix.env()}.exs"
