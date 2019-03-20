@@ -5,12 +5,9 @@ use Mix.Config
 config :dawdle, backend: Dawdle.Backend.SQS
 
 config :dawdle, Dawdle.Backend.SQS,
-  region: {:system, :string, "WOCKY_DB_WATCHER_REGION"},
-  message_queue: {:system, :string, "WOCKY_DB_WATCHER_QUEUE"},
-  delay_queue: ""
+  region: "us-west-2"
 
-config :dawdle_db,
-  channel: "wocky_db_watcher_notify"
+config :dawdle_db, channel: "wocky_db_watcher_notify"
 
 config :dawdle_db, :db,
   database: {:system, :string, "WOCKY_DB_NAME", "wocky"},
