@@ -7,7 +7,8 @@ config :dawdle,
   backend: Dawdle.Backend.SQS
 
 config :dawdle, Dawdle.Backend.SQS,
-  region: "us-west-2"
+  region: "us-west-2",
+  message_queue: {:system, :string, "DAWDLE_SQS_MESSAGE_QUEUE"}
 
 config :dawdle_db, channel: "wocky_db_watcher_notify"
 
