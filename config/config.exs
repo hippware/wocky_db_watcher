@@ -2,7 +2,9 @@
 # and its dependencies with the aid of the Mix.Config module.
 use Mix.Config
 
-config :dawdle, backend: Dawdle.Backend.SQS
+config :dawdle,
+  start_listener: false,
+  backend: Dawdle.Backend.SQS
 
 config :dawdle, Dawdle.Backend.SQS,
   region: "us-west-2"
