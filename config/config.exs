@@ -3,7 +3,7 @@
 use Mix.Config
 
 config :dawdle,
-  start_listener: false,
+  start_pollers: false,
   backend: Dawdle.Backend.SQS
 
 config :dawdle_db, channel: "wocky_db_watcher_notify"
