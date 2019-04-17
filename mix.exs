@@ -34,7 +34,7 @@ defmodule WockyDbWatcher.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:dawdle_db, github: "hippware/dawdle_db", branch: "master"},
+      {:dawdle_db, "~> 0.5"},
       {:distillery, "~> 2.0", runtime: false},
       {:rexbug, ">= 1.0.0"}
     ]
