@@ -1,23 +1,18 @@
-- type: serial
+- name: push_image
   tag: master
+  type: serial
   steps:
-  - name: version
-    service: wocky_db_watcher_build
-    command: elixir version.exs
-  - name: release
-    service: wocky_db_watcher_build
-    command: make release
   - name: push_latest_image
-    service: wocky_db_watcher_rel
+    service: wocky-db-watcher-rel
     type: push
     image_tag: latest
     image_name: 773488857071.dkr.ecr.us-west-2.amazonaws.com/hippware/wocky_db_watcher
     registry: https://773488857071.dkr.ecr.us-west-2.amazonaws.com
-    dockercfg_service: aws_dockercfg
+    dockercfg_service: aws-dockercfg
   - name: push_tagged_image
-    service: wocky_db_watcher_rel
+    service: wocky-db-watcher-rel
     type: push
     image_tag: "{{.CommitID}}"
     image_name: 773488857071.dkr.ecr.us-west-2.amazonaws.com/hippware/wocky_db_watcher
     registry: https://773488857071.dkr.ecr.us-west-2.amazonaws.com
-    dockercfg_service: aws_dockercfg
+    dockercfg_service: aws-dockercfg
