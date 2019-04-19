@@ -44,7 +44,7 @@ RUN \
 USER default
 WORKDIR /opt/app
 
-COPY --from=0 /opt/app/_build/prod/rel/dawdle_db_watcher ./
+COPY --from=0 /opt/app/_build/prod/rel/wocky_db_watcher ./
 
-ENTRYPOINT ["bin/dawdle_db_watcher"]
+ENTRYPOINT ["bin/wocky_db_watcher"]
 CMD ["foreground"]
