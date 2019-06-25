@@ -11,7 +11,7 @@ COPY rel/ ./rel/
 COPY config/ ./config/
 COPY lib/ ./lib/
 
-RUN mix release --warnings-as-errors --no-tar --quiet
+RUN mix distillery.release --warnings-as-errors --no-tar --quiet
 
 
 FROM alpine:3.9
