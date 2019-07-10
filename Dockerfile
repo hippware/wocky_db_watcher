@@ -1,6 +1,6 @@
-FROM hippware/alpine-elixir-dev:1.8
+FROM hippware/alpine-elixir-dev:1.9.0
 
-ENV REFRESHED_AT=2019-04-18 \
+ENV REFRESHED_AT=2019-07-09 \
     MIX_ENV=prod
 
 COPY mix.exs mix.lock version.exs ./
@@ -14,7 +14,7 @@ COPY lib/ ./lib/
 RUN mix distillery.release --warnings-as-errors --no-tar --quiet
 
 
-FROM alpine:3.9
+FROM alpine:3.10
 
 ENV LANG=en_US.UTF-8 \
     HOME=/opt/app \
