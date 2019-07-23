@@ -34,6 +34,7 @@ defmodule WockyDbWatcher.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:configparser_ex, "~> 4.0", only: [:dev, :test]},
       {:dawdle_db, "~> 0.5"},
       {:distillery, "~> 2.0", runtime: false},
       {:rexbug, ">= 1.0.0"}
