@@ -37,6 +37,7 @@ defmodule WockyDbWatcher.Mixfile do
       {:configparser_ex, "~> 4.0", only: [:dev, :test]},
       {:dawdle_db, "~> 0.5"},
       {:distillery, "~> 2.0", runtime: false},
+      {:ex_json_logger, "~> 1.0"},
       {:rexbug, ">= 1.0.0"}
     ]
   end

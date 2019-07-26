@@ -31,3 +31,15 @@ else
       {:awscli, "default", 30}
     ]
 end
+
+config :logger,
+  truncate: :infinity,
+  backends: [:console],
+  compile_time_purge_level: :info,
+  level: :info
+
+config :logger, :console,
+  format: "$date $time [$level] $levelpad$metadata$message\n",
+  colors: [enabled: false],
+  format: {ExJsonLogger, :format},
+  metadata: :all
